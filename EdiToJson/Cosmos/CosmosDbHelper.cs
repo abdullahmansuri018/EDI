@@ -56,8 +56,7 @@ public static class CosmosDbHelper
             var containerItem = new
             {
                 id = uniqueId,            // Add generated GUID as the 'id'
-                Data = jsonOutput,        // The data you're uploading
-                ContainerId = containerId // The PartitionKey for Cosmos DB
+                jsonOutput        // The data you're uploading
             };
 
             // Upload the item to Cosmos DB using the generated 'id' and 'ContainerId' as partition key
