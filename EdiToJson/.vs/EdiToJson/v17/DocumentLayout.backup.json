@@ -1,0 +1,232 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\EDI\\EdiToJson\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|d:\\edi\\editojson\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|d:\\edi\\editojson\\ediparser\\edi315parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|solutionrelative:ediparser\\edi315parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|d:\\edi\\editojson\\edisegment\\requiredjson.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|solutionrelative:edisegment\\requiredjson.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|d:\\edi\\editojson\\ediparser\\n9_parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|solutionrelative:ediparser\\n9_parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|d:\\edi\\editojson\\edisegment\\n9.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|solutionrelative:edisegment\\n9.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|d:\\edi\\editojson\\cosmos\\cosmosdbhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|solutionrelative:cosmos\\cosmosdbhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|d:\\edi\\editojson\\ediparser\\b4_parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|solutionrelative:ediparser\\b4_parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|d:\\edi\\editojson\\ediparser\\r4_parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|solutionrelative:ediparser\\r4_parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|d:\\edi\\editojson\\edisegment\\b4.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|solutionrelative:edisegment\\b4.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|d:\\edi\\editojson\\ediparser\\ge_parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|solutionrelative:ediparser\\ge_parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|d:\\edi\\editojson\\ediparser\\q2_parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|solutionrelative:ediparser\\q2_parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|d:\\edi\\editojson\\edisegment\\segmentblock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A01C1648-7517-4FE2-9A69-903FAA18EF88}|EdiToJson.csproj|solutionrelative:edisegment\\segmentblock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "N9.cs",
+              "DocumentMoniker": "D:\\EDI\\EdiToJson\\EdiSegment\\N9.cs",
+              "RelativeDocumentMoniker": "EdiSegment\\N9.cs",
+              "ToolTip": "D:\\EDI\\EdiToJson\\EdiSegment\\N9.cs",
+              "RelativeToolTip": "EdiSegment\\N9.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA8AAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-21T08:58:19.34Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "N9_parser.cs",
+              "DocumentMoniker": "D:\\EDI\\EdiToJson\\EdiParser\\N9_parser.cs",
+              "RelativeDocumentMoniker": "EdiParser\\N9_parser.cs",
+              "ToolTip": "D:\\EDI\\EdiToJson\\EdiParser\\N9_parser.cs",
+              "RelativeToolTip": "EdiParser\\N9_parser.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABYAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-21T08:35:00.753Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "R4_parser.cs",
+              "DocumentMoniker": "D:\\EDI\\EdiToJson\\EdiParser\\R4_parser.cs",
+              "RelativeDocumentMoniker": "EdiParser\\R4_parser.cs",
+              "ToolTip": "D:\\EDI\\EdiToJson\\EdiParser\\R4_parser.cs",
+              "RelativeToolTip": "EdiParser\\R4_parser.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwCAAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-21T08:30:41.153Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "B4_parser.cs",
+              "DocumentMoniker": "D:\\EDI\\EdiToJson\\EdiParser\\B4_parser.cs",
+              "RelativeDocumentMoniker": "EdiParser\\B4_parser.cs",
+              "ToolTip": "D:\\EDI\\EdiToJson\\EdiParser\\B4_parser.cs",
+              "RelativeToolTip": "EdiParser\\B4_parser.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAADQAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-21T08:13:26.353Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "B4.cs",
+              "DocumentMoniker": "D:\\EDI\\EdiToJson\\EdiSegment\\B4.cs",
+              "RelativeDocumentMoniker": "EdiSegment\\B4.cs",
+              "ToolTip": "D:\\EDI\\EdiToJson\\EdiSegment\\B4.cs",
+              "RelativeToolTip": "EdiSegment\\B4.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwBIAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-21T07:11:21.276Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "SegmentBlock.cs",
+              "DocumentMoniker": "D:\\EDI\\EdiToJson\\EdiSegment\\SegmentBlock.cs",
+              "RelativeDocumentMoniker": "EdiSegment\\SegmentBlock.cs",
+              "ToolTip": "D:\\EDI\\EdiToJson\\EdiSegment\\SegmentBlock.cs",
+              "RelativeToolTip": "EdiSegment\\SegmentBlock.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-21T07:10:46.037Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Q2_parser.cs",
+              "DocumentMoniker": "D:\\EDI\\EdiToJson\\EdiParser\\Q2_parser.cs",
+              "RelativeDocumentMoniker": "EdiParser\\Q2_parser.cs",
+              "ToolTip": "D:\\EDI\\EdiToJson\\EdiParser\\Q2_parser.cs",
+              "RelativeToolTip": "EdiParser\\Q2_parser.cs",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-21T07:09:13.92Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "GE_parser.cs",
+              "DocumentMoniker": "D:\\EDI\\EdiToJson\\EdiParser\\GE_parser.cs",
+              "RelativeDocumentMoniker": "EdiParser\\GE_parser.cs",
+              "ToolTip": "D:\\EDI\\EdiToJson\\EdiParser\\GE_parser.cs",
+              "RelativeToolTip": "EdiParser\\GE_parser.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-21T06:57:13.319Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\EDI\\EdiToJson\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\EDI\\EdiToJson\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-21T06:41:24.37Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CosmosDbHelper.cs",
+              "DocumentMoniker": "D:\\EDI\\EdiToJson\\Cosmos\\CosmosDbHelper.cs",
+              "RelativeDocumentMoniker": "Cosmos\\CosmosDbHelper.cs",
+              "ToolTip": "D:\\EDI\\EdiToJson\\Cosmos\\CosmosDbHelper.cs",
+              "RelativeToolTip": "Cosmos\\CosmosDbHelper.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAAwEIAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-21T06:35:27.1Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "RequiredJson.cs",
+              "DocumentMoniker": "D:\\EDI\\EdiToJson\\EdiSegment\\RequiredJson.cs",
+              "RelativeDocumentMoniker": "EdiSegment\\RequiredJson.cs",
+              "ToolTip": "D:\\EDI\\EdiToJson\\EdiSegment\\RequiredJson.cs",
+              "RelativeToolTip": "EdiSegment\\RequiredJson.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-21T06:05:59.018Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Edi315Parser.cs",
+              "DocumentMoniker": "D:\\EDI\\EdiToJson\\EdiParser\\Edi315Parser.cs",
+              "RelativeDocumentMoniker": "EdiParser\\Edi315Parser.cs",
+              "ToolTip": "D:\\EDI\\EdiToJson\\EdiParser\\Edi315Parser.cs",
+              "RelativeToolTip": "EdiParser\\Edi315Parser.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAAwGYAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-20T05:32:32.496Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
