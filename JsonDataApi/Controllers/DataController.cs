@@ -26,37 +26,37 @@ namespace JsonDataApi.Controllers
         // The model class CosmosItem should be defined somewhere in your code
         // Example: public class CosmosItem { ... }
 
-        [HttpGet("fetch-all-data")]
-        public async Task<IActionResult> FetchAllDataFromCosmos()
+        // [HttpGet("fetch-all-data")]
+        // public async Task<IActionResult> FetchAllDataFromCosmos()
 
 
-        {
-            // Query to fetch all records from Cosmos DB
-            var query = _container.GetItemQueryIterator<dynamic>("SELECT * FROM c");
+        // {
+        //     // Query to fetch all records from Cosmos DB
+        //     var query = _container.GetItemQueryIterator<dynamic>("SELECT * FROM c");
 
-            var results = new List<CosmosContainer>();
+        //     var results = new List<CosmosContainer>();
 
-            // Execute the query and process results
-            while (query.HasMoreResults)
-            {
-                var response = await query.ReadNextAsync();
-                foreach (var item in response)
-                {
-                    // Deserialize each item to CosmosItem model
-                    var cosmosItem = JsonConvert.DeserializeObject<CosmosContainer>(item.ToString());
-                    results.Add(cosmosItem);
-                }
-            }
+        //     // Execute the query and process results
+        //     while (query.HasMoreResults)
+        //     {
+        //         var response = await query.ReadNextAsync();
+        //         foreach (var item in response)
+        //         {
+        //             // Deserialize each item to CosmosItem model
+        //             var cosmosItem = JsonConvert.DeserializeObject<CosmosContainer>(item.ToString());
+        //             results.Add(cosmosItem);
+        //         }
+        //     }
 
-            // If no results found, return 404
-            if (results.Count == 0)
-            {
-                return NotFound("No data found.");
-            }
+        //     // If no results found, return 404
+        //     if (results.Count == 0)
+        //     {
+        //         return NotFound("No data found.");
+        //     }
 
-            // Return the data as JSON
-            return Ok(results);
-        }
+        //     // Return the data as JSON
+        //     return Ok(results);
+        // }
         [Authorize]
         [HttpGet("fetch-by-containerId/{containerId}")]
         public async Task<IActionResult> FetchDataByContainerId(string containerId)
