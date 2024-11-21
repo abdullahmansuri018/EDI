@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JsonDataApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+953d9d41b7e0b395d57ab09f44c45399d48e3ba4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b3e9d57351bc636e83c6698fb8a607b8f9755a45")]
 [assembly: System.Reflection.AssemblyProductAttribute("JsonDataApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JsonDataApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
