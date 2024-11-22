@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JsonDataApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241122091557_Inti")]
+    [Migration("20241122171127_Inti")]
     partial class Inti
     {
         /// <inheritdoc />

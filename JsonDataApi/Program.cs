@@ -12,13 +12,25 @@ public class Program
 
         // Add services to the container.
 
-        builder.Services.AddControllersWithViews();
+        builder.Services.AddControllers();
+
         // Add Cosmos DB configuration
-builder.Services.AddSingleton<CosmosClient>(sp =>
-{
-    var cosmosDbConfig = builder.Configuration.GetSection("CosmosDb");
-    return new CosmosClient(cosmosDbConfig["EndpointUri"], cosmosDbConfig["PrimaryKey"]);
-});
+        builder.Services.AddSingleton<CosmosClient>(sp =>
+        {
+            var cosmosDbConfig = builder.Configuration.GetSection("CosmosDb");
+            return new CosmosClient(cosmosDbConfig["EndpointUri"], cosmosDbConfig["PrimaryKey"]);
+        });
+
+        // Add CORS policy to allow all origins, methods, and headers
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll", policy =>
+            {
+                policy.AllowAnyOrigin()  // Allow any origin
+                      .AllowAnyHeader()  // Allow any header
+                      .AllowAnyMethod();  // Allow any HTTP method (GET, POST, etc.)
+            });
+        });
 
         builder.Services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -33,14 +45,19 @@ builder.Services.AddSingleton<CosmosClient>(sp =>
                 };
             });
 
+        // Add DbContext configuration for SQL Server
+        builder.Services.AddDbContext<AppDbContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+        );
 
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        // Configure Swagger/OpenAPI
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
         var app = builder.Build();
+
+        // Enable CORS globally
+        app.UseCors("AllowAll");  // Use the "AllowAll" policy for all requests
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
@@ -57,10 +74,8 @@ builder.Services.AddSingleton<CosmosClient>(sp =>
 
         app.UseAuthorization();
 
-
         app.MapControllers();
 
         app.Run();
     }
 }
-

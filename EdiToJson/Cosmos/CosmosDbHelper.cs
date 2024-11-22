@@ -52,8 +52,21 @@ public static class CosmosDbHelper
             
             // Create an anonymous object to hold the data with the 'id' field and dynamic PartitionKey based on the ContainerId
             var containerItem = new
-            {          
-                jsonOutput        // The data you're uploading
+            {
+                id = Guid.NewGuid().ToString(),
+                ContainerId = containerId, // Directly include the ContainerId
+                TradeType = jsonOutput.TradeType,
+                Status = jsonOutput.Status,
+                Holds = jsonOutput.Holds,
+                Origin = jsonOutput.Origin,
+                Destination = jsonOutput.Destination,
+                line = jsonOutput.line,
+                VesselName = jsonOutput.VesselName,
+                VesselCode = jsonOutput.VesselCode,
+                Vogage = jsonOutput.Vogage,
+                SizeType = jsonOutput.SizeType,
+                Fees = jsonOutput.Fees,
+                Date = jsonOutput.Date// The data you're uploading
             };
 
             // Upload the item to Cosmos DB using the generated 'id' and 'ContainerId' as partition key

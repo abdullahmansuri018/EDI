@@ -1,0 +1,21 @@
+<div>
+    <h2>Fetch Container Data by Container ID</h2>
+    
+    <input [(ngModel)]="containerId" placeholder="Enter Container ID" />
+    <button (click)="onFetchData()">Fetch Data</button>
+  
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+  
+    <div *ngIf="fetchedData.length > 0">
+      <h3>Fetched Data</h3>
+      <ul>
+        <li *ngFor="let item of fetchedData">
+          <!-- Adjust the display based on the structure of your data -->
+          <pre>{{ item | json }}</pre>
+        </li>
+      </ul>
+    </div>
+  </div>
+  

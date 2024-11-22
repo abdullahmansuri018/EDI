@@ -53,7 +53,6 @@ namespace EdiToJson.EdiParser
                         break;
                     case "ST":
                         requiredjson = new RequiredJson();
-                        requiredjson.id= Guid.NewGuid().ToString();
                         currentBlock = new SegmentBlock();
                         currentBlock.ST = stParser.ParseST(segments); // Parse ST
                         isParsingST = true;

@@ -6,12 +6,7 @@ namespace JsonDataApi.Models
     {
         // Primary fields - excluding Cosmos DB metadata
         public string Id { get; set; }
-        public ContainerData Data { get; set; }
-    }
-    public class ContainerData
-    {
-        // Container-related information
-        public string ContainerId { get; set; }
+         public string ContainerId { get; set; }
         public string TradeType { get; set; }
         public string Status { get; set; }
         public bool Holds { get; set; }
@@ -22,8 +17,7 @@ namespace JsonDataApi.Models
         public string VesselCode { get; set; }
         public string Vogage { get; set; }
         public string SizeType { get; set; }
-        public decimal Fees { get; set; }
+        public int Fees { get; set; }
         public DateTime Date { get; set; }
     }
-
 }
