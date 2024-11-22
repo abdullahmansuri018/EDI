@@ -12,8 +12,8 @@ namespace EdiToJson.EdiSegment
         public string TradeType { get; set; }
         public string Status { get; set; }
         public bool Holds { get; set; }=false;
-        public String Origin { get; set; }
-        public String Destination { get; set; }
+        public string Origin { get; set; }
+        public string Destination { get; set; }
         public string line { get; set; }
         public string VesselName { get; set; }
         public string VesselCode { get; set; }
