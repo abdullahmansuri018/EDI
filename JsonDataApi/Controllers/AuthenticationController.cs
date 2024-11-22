@@ -85,6 +85,7 @@ namespace JsonDataApi.Controllers
             var audience = Configuration["JWT:Audience"];
              var identity = new ClaimsIdentity(new Claim[] {
                 new Claim(ClaimTypes.Email, user.Email),
+                new Claim("Id",user.Id.ToString())
             });
             var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var handler = new JwtSecurityTokenHandler();
