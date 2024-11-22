@@ -8,6 +8,7 @@ namespace EdiToJson.EdiSegment
 {
     public class RequiredJson
     {
+        public string id{get; set;}
         public string ContainerId { get; set; }
         public string TradeType { get; set; }
         public string Status { get; set; }

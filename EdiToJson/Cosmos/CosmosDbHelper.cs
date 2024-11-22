@@ -49,19 +49,16 @@ public static class CosmosDbHelper
     {
         try
         {
-            // Generate a GUID for the 'id' field of the document
-            string uniqueId = Guid.NewGuid().ToString(); // Generate unique ID
-
+            
             // Create an anonymous object to hold the data with the 'id' field and dynamic PartitionKey based on the ContainerId
             var containerItem = new
-            {
-                id = uniqueId,            // Add generated GUID as the 'id'
+            {          
                 jsonOutput        // The data you're uploading
             };
 
             // Upload the item to Cosmos DB using the generated 'id' and 'ContainerId' as partition key
             await container.CreateItemAsync(containerItem, new PartitionKey(containerId));
-            Console.WriteLine($"Uploaded data to Cosmos DB with partition key (ContainerId): {containerId} and id: {uniqueId}.");
+            //Console.WriteLine($"Uploaded data to Cosmos DB with partition key (ContainerId): {containerId} and id: {uniqueId}.");
         }
         catch (CosmosException cosmosEx)
         {
