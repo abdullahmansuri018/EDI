@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Azure.Cosmos;
+using JsonDataApi.Services;
 using System.Text;
 
 public class Program
@@ -49,6 +50,12 @@ public class Program
         builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
         );
+
+        // Register Authentication Service (For handling user registration, login, password hashing)
+        builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+        // Register the DataService and IDataService for Dependency Injection
+        builder.Services.AddScoped<IDataService, DataService>();
 
         // Configure Swagger/OpenAPI
         builder.Services.AddEndpointsApiExplorer();

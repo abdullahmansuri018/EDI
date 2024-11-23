@@ -17,7 +17,7 @@ namespace EdiToJson.EdiSegment
         public string line { get; set; }
         public string VesselName { get; set; }
         public string VesselCode { get; set; }
-        public string Vogage { get; set; }
+        public string Voyage { get; set; }
         public string SizeType { get; set; }
         public int Fees { get; set; }
 

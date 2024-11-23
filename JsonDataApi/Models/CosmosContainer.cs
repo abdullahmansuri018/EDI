@@ -15,7 +15,7 @@ namespace JsonDataApi.Models
         public string Line { get; set; }
         public string VesselName { get; set; }
         public string VesselCode { get; set; }
-        public string Vogage { get; set; }
+        public string Voyage { get; set; }
         public string SizeType { get; set; }
         public int Fees { get; set; }
         public DateTime Date { get; set; }

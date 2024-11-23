@@ -94,14 +94,14 @@ n9Segment.ReferenceIdentificationQualifier == "DWT" || n9Segment.ReferenceIdenti
                                 //decimal feeAmount = 0;
 
                                 // Attempt to parse the fee value from the segment
-                                if (requiredjson.Fees > 0)
-                                {
-                                    requiredjson.Holds = true;
-                                }
-                                else
-                                { 
-                                    requiredjson.Holds= false;
-                                }
+                                //if (requiredjson.Fees > 0)
+                                //{
+                                //    requiredjson.Holds = true;
+                                //}
+                                //else
+                                //{ 
+                                //    requiredjson.Holds= false;
+                                //}
                             }
                         }
                         break;
@@ -119,7 +119,7 @@ n9Segment.ReferenceIdentificationQualifier == "DWT" || n9Segment.ReferenceIdenti
                             currentBlock.Q2 = q2Segment;  // Parse and add Q2 segment
                             requiredjson.VesselName = currentBlock.Q2.VesselName;
                             requiredjson.VesselCode = currentBlock.Q2.VesselCode;
-                            requiredjson.Vogage = currentBlock.Q2.FlightNumber;
+                            requiredjson.Voyage = currentBlock.Q2.FlightNumber;
                         }
                         break;
                     case "R4":

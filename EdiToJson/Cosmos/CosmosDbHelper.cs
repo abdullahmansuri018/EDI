@@ -63,7 +63,7 @@ public static class CosmosDbHelper
                 line = jsonOutput.line,
                 VesselName = jsonOutput.VesselName,
                 VesselCode = jsonOutput.VesselCode,
-                Vogage = jsonOutput.Vogage,
+                Voyage = jsonOutput.Voyage,
                 SizeType = jsonOutput.SizeType,
                 Fees = jsonOutput.Fees,
                 Date = jsonOutput.Date// The data you're uploading

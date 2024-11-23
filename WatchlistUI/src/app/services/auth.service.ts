@@ -23,16 +23,26 @@ export class AuthService {
 
   // Check if user is logged in by verifying token presence in localStorage
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('token');
+    // Check if running in the browser before accessing localStorage
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return !!localStorage.getItem('token');
+    }
+    return false;  // Return false if running in a non-browser environment
   }
 
   // Get the current JWT token
   getToken(): string | null {
-    return localStorage.getItem('token');
+    // Check if running in the browser before accessing localStorage
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return localStorage.getItem('token');
+    }
+    return null;  // Return null if running in a non-browser environment
   }
 
   // Log the user out by removing the token from localStorage
   logout(): void {
-    localStorage.removeItem('token');
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.removeItem('token');
+    }
   }
 }
