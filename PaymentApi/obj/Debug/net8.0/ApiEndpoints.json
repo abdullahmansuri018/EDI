@@ -1,0 +1,28 @@
+[
+  {
+    "ContainingType": "PaymentApi.Controllers.PaymentController",
+    "Method": "MarkAsPaid",
+    "RelativePath": "api/Payment/mark-as-paid/{containerId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "containerId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PaymentApi.Controllers.PaymentController",
+    "Method": "ProcessServiceBusMessage",
+    "RelativePath": "api/Payment/process-service-bus-message",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

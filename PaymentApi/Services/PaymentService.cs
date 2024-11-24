@@ -97,40 +97,71 @@ namespace PaymentApi.Services
         }
 
         // Update the 'Holds' field in Cosmos DB
-        private async Task UpdateContainerInCosmosDb(string containerId)
+        public async Task UpdateContainerInCosmosDb(string containerId)
         {
             try
             {
-                _logger.LogInformation($"Attempting to find container in Cosmos DB with ContainerId: {containerId}");
+                // Log containerId before querying to ensure it's valid
+                if (string.IsNullOrEmpty(containerId))
+                {
+                    _logger.LogError("The containerId parameter is null or empty, which is invalid.");
+                    return;
+                }
 
-                var cosmosItem = await _cosmosContainer
-                    .GetItemLinqQueryable<CosmosContainer>()
-                    .Where(item => item.ContainerId == containerId)
-                    .FirstOrDefaultAsync();
+                _logger.LogInformation($"Attempting to update container with ID: {containerId}");
 
+                // Build the query to search for the container by its ID (ensure partition key is correct)
+                var queryDefinition = new QueryDefinition("SELECT * FROM c WHERE c.ContainerId = @containerId")
+                    .WithParameter("@containerId", containerId);
+
+                // Log the exact query being executed
+                _logger.LogInformation($"Executing query: SELECT * FROM c WHERE c.ContainerId = '{containerId}'");
+
+                // Execute the query (ensure the partition key is used)
+                var queryIterator = _cosmosContainer.GetItemQueryIterator<CosmosContainer>(
+                    queryDefinition,
+                    requestOptions: new QueryRequestOptions { PartitionKey = new PartitionKey(containerId) });
+
+                var response = await queryIterator.ReadNextAsync();
+
+                if (response.Count == 0)
+                {
+                    _logger.LogWarning($"No container found with ID: {containerId}. Please verify the input.");
+                    return;
+                }
+
+                // Log the document retrieved (if any)
+                var cosmosItem = response.FirstOrDefault();
                 if (cosmosItem != null)
                 {
-                    _logger.LogInformation($"Found container with ID: {containerId}. Updating 'Holds' field.");
+                    _logger.LogInformation($"Document retrieved with ID: {containerId}. Preparing to update.");
 
-                    cosmosItem.Holds = true;
-                    string partitionKey = containerId;
+                    // Log current 'Holds' value before updating
+                    _logger.LogInformation($"Current Holds value for Container ID: {containerId} is {cosmosItem.Holds}");
 
-                    // Replace the item in Cosmos DB
-                    await _cosmosContainer.ReplaceItemAsync(cosmosItem, cosmosItem.Id.ToString(), new PartitionKey(partitionKey));
-                    _logger.LogInformation($"Container ID {containerId} updated with Holds = true.");
+                    // Update the container's 'Holds' field
+                    cosmosItem.Holds = true; // Update to false, based on your previous request
+
+                    // Log the updated 'Holds' value
+                    _logger.LogInformation($"Updating container with ID: {containerId}, setting Holds to true.");
+
+                    // Replace the document with the updated data
+                    await _cosmosContainer.UpsertItemAsync(cosmosItem, new PartitionKey(containerId));
+
+                    _logger.LogInformation($"Container with ID: {containerId} successfully updated in Cosmos DB.");
                 }
                 else
                 {
-                    _logger.LogWarning($"Container with ID {containerId} not found in Cosmos DB.");
+                    _logger.LogWarning($"Container with ID: {containerId} was not found in Cosmos DB.");
                 }
             }
             catch (CosmosException cosmosEx)
             {
-                _logger.LogError($"Cosmos DB error: {cosmosEx.Message}");
+                _logger.LogError($"Cosmos DB error: {cosmosEx.Message}, Stack Trace: {cosmosEx.StackTrace}");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error updating Cosmos DB: {ex.Message}");
+                _logger.LogError($"An error occurred while updating the container in Cosmos DB: {ex.Message}, Stack Trace: {ex.StackTrace}");
             }
         }
     }

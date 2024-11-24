@@ -28,14 +28,14 @@ namespace PaymentApi.Controllers
             var userIdString = User.Claims.FirstOrDefault(c => c.Type == "Id")?.Value;
             if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out var userId))
             {
-                return Unauthorized("User information is missing or invalid in the claims.");
+                return Unauthorized(new { message = "User information is missing or invalid in the claims." });
             }
 
             // Query the database to check if the user exists
-            var user = await _dbContext.Users.FindAsync(userId);  
+            var user = await _dbContext.Users.FindAsync(userId);
             if (user == null)
             {
-                return Unauthorized("User does not exist in the database.");
+                return Unauthorized(new { message = "User does not exist in the database." });
             }
 
             // Call PaymentService to mark the container as paid and send a message to Azure Service Bus
@@ -43,13 +43,24 @@ namespace PaymentApi.Controllers
 
             if (result)
             {
-                return Ok("Container marked as paid and notification sent.");
+                try
+                {
+                    // Call PaymentService to update the 'Holds' field in Cosmos DB
+                    await _paymentService.UpdateContainerInCosmosDb(containerId);
+                    return Ok(new { message = "Container marked as paid, notification sent, and Holds field updated." });
+                }
+                catch (Exception ex)
+                {
+                    // Handle Cosmos DB update failure
+                    return NotFound(new { message = "Container not found in Cosmos DB or failed to update.", error = ex.Message });
+                }
             }
             else
             {
-                return NotFound("Container not found or user does not have permission.");
+                return NotFound(new { message = "Container not found or user does not have permission." });
             }
         }
+
 
         // API to receive and process messages from the Service Bus
         [Authorize]

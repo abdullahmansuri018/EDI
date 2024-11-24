@@ -33,6 +33,16 @@ builder.Services.AddSingleton<ServiceBusClient>(serviceProvider =>
     return new ServiceBusClient(serviceBusConnectionString);
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()  // Allow any origin
+              .AllowAnyHeader()  // Allow any header
+              .AllowAnyMethod();  // Allow any HTTP method (GET, POST, etc.)
+    });
+});
+
 // Add JWT Authentication
 builder.Services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -51,6 +61,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseCors("AllowAll");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

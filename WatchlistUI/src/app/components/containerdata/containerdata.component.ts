@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { ContainerDataService } from '../../services/containerdata.service';  // Adjust the import path
+import { ContainerDataService } from '../../services/containerdata.service'; // Adjust the import path
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { PaymentService } from '../../services/payment.service'; // Add the payment service
 
 @Component({
   selector: 'app-containerdata',
@@ -16,7 +17,7 @@ export class ContainerDataComponent {
   fetchedData: any[] = [];
   errorMessage: string = '';
 
-  constructor(private containerDataService: ContainerDataService) {}
+  constructor(private containerDataService: ContainerDataService, private paymentService: PaymentService) {}
 
   ngOnInit(): void {
     this.fetchDataByUserId();  // Fetch initial data when the component is initialized
@@ -40,7 +41,7 @@ export class ContainerDataComponent {
       this.errorMessage = 'Container ID is required';
       return;
     }
-     // Check if the containerId already exists in the fetched data
+    // Check if the containerId already exists in the fetched data
     const containerExists = this.fetchedData.some(container => container.containerId === this.containerId);
     if (containerExists) {
       this.errorMessage = 'This container ID has already been entered';
@@ -70,4 +71,33 @@ export class ContainerDataComponent {
       }
     });
   }
+
+  // Mark container as paid
+  markAsPaid(containerId: string) {
+    this.errorMessage = ''; // Reset error message
+  
+    const token = localStorage.getItem('token');
+    console.log('Token retrieved:', token);  // Log the token to confirm it's being retrieved
+  
+    if (!token) {
+      console.error('Authentication token is missing');
+      this.errorMessage = 'Authentication token is missing. Please log in again.';
+      return;
+    }
+  
+    // Proceed to call the API
+    this.paymentService.markAsPaid(containerId).subscribe({
+      next: (response) => {
+        console.log('Payment successful', response);
+        alert('Payment processed successfully!');
+      },
+      error: (err) => {
+        console.error('Payment failed', err);
+        this.errorMessage = err.error?.message || 'Failed to mark as paid';
+      }
+    });
+  }
+  
+  
+  
 }

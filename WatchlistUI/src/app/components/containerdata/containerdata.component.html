@@ -47,6 +47,7 @@
           <td>{{ item.fees }}</td>
           <td>{{ item.date | date: 'yyyy-MM-dd' }}</td>  <!-- Formatting the date -->
           <td>
+            <button (click)="markAsPaid(item.containerId)">Pay</button>
             <button (click)="removeContainer(item.containerId)">Remove</button>
           </td>
         </tr>

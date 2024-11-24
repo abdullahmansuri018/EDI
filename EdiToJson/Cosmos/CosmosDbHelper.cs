@@ -60,7 +60,7 @@ public static class CosmosDbHelper
                 Holds = jsonOutput.Holds,
                 Origin = jsonOutput.Origin,
                 Destination = jsonOutput.Destination,
-                line = jsonOutput.line,
+                Line = jsonOutput.line,
                 VesselName = jsonOutput.VesselName,
                 VesselCode = jsonOutput.VesselCode,
                 Voyage = jsonOutput.Voyage,
@@ -68,7 +68,7 @@ public static class CosmosDbHelper
                 Fees = jsonOutput.Fees,
                 Date = jsonOutput.Date// The data you're uploading
             };
-
+            Console.WriteLine($"Uploading item with id: {containerItem.id} and partition key: {containerItem.ContainerId}");
             // Upload the item to Cosmos DB using the generated 'id' and 'ContainerId' as partition key
             await container.CreateItemAsync(containerItem, new PartitionKey(containerId));
             //Console.WriteLine($"Uploaded data to Cosmos DB with partition key (ContainerId): {containerId} and id: {uniqueId}.");
