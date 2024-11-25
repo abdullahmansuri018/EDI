@@ -72,10 +72,10 @@ export class ContainerDataComponent {
     });
   }
 
-  // Mark container as paid
+  // Mark container as paid and process service bus message
   markAsPaid(containerId: string) {
     this.errorMessage = ''; // Reset error message
-  
+    
     const token = localStorage.getItem('token');
     console.log('Token retrieved:', token);  // Log the token to confirm it's being retrieved
   
@@ -85,11 +85,21 @@ export class ContainerDataComponent {
       return;
     }
   
-    // Proceed to call the API
+    // Call the mark-as-paid API
     this.paymentService.markAsPaid(containerId).subscribe({
       next: (response) => {
         console.log('Payment successful', response);
-        alert('Payment processed successfully!');
+        // Once payment is successful, process the service bus message
+        this.paymentService.processServiceBusMessage().subscribe({
+          next: (serviceBusResponse) => {
+            console.log('Service bus message processed', serviceBusResponse);
+            alert('Payment processed successfully and service bus message processed!');
+          },
+          error: (serviceBusError) => {
+            console.error('Failed to process service bus message', serviceBusError);
+            this.errorMessage = serviceBusError.error?.message || 'Failed to process service bus message';
+          }
+        });
       },
       error: (err) => {
         console.error('Payment failed', err);
@@ -97,7 +107,4 @@ export class ContainerDataComponent {
       }
     });
   }
-  
-  
-  
 }

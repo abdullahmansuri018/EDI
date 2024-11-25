@@ -1,15 +1,15 @@
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.Cosmos;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using PaymentApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace PaymentApi.Services
 {
@@ -32,76 +32,123 @@ namespace PaymentApi.Services
             _logger = logger;
         }
 
-        // Mark the container as paid and send a notification via Service Bus
-        public async Task<bool> MarkAsPaidAndNotifyAsync(int userId, string containerId)
+        // Push data to Azure Service Bus
+        public async Task PushDataToServiceBusAsync(string containerId)
         {
-            var userContainerData = await _dbContext.UserContainerData
-                .Where(x => x.UserId == Convert.ToString(userId) && x.ContainerId == containerId)
-                .FirstOrDefaultAsync();
-
-            if (userContainerData == null)
-            {
-                _logger.LogWarning($"User with ID {userId} and Container ID {containerId} not found.");
-                return false;
-            }
-
-            userContainerData.IsPaid = true;
-            await _dbContext.SaveChangesAsync();
-
             var messageBody = new { ContainerId = containerId };
             var message = new ServiceBusMessage(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(messageBody)))
             {
                 ContentType = "application/json"
             };
 
-            await _serviceBusSender.SendMessageAsync(message);
-            _logger.LogInformation($"Message sent to Service Bus for Container ID: {containerId}");
-            return true;
+            try
+            {
+                await _serviceBusSender.SendMessageAsync(message);
+                _logger.LogInformation($"Message with ContainerId {containerId} sent to Service Bus.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error sending message to Service Bus: {ex.Message}");
+                throw;
+            }
         }
 
-        // Receive and process messages from Service Bus
-        public async Task ReceiveAndProcessMessageAsync()
+        // Process message from Service Bus and update SQL and Cosmos DB
+        public async Task ProcessMessageFromServiceBusAsync(int userId)
         {
-            ServiceBusReceivedMessage receivedMessage = await _serviceBusReceiver.ReceiveMessageAsync();
-
-            if (receivedMessage != null)
+            try
             {
-                try
+                // Receive a single message from Service Bus
+                ServiceBusReceivedMessage receivedMessage = await _serviceBusReceiver.ReceiveMessageAsync();
+
+                if (receivedMessage != null)
                 {
+                    // Deserialize the message
                     string messageBody = receivedMessage.Body.ToString();
                     var messageData = JsonConvert.DeserializeObject<dynamic>(messageBody);
                     string containerId = messageData?.ContainerId;
 
-                    if (!string.IsNullOrEmpty(containerId))
-                    {
-                        _logger.LogInformation($"Processing message for Container ID: {containerId}");
-                        await UpdateContainerInCosmosDb(containerId);
-                        await _serviceBusReceiver.CompleteMessageAsync(receivedMessage);
-                    }
-                    else
+                    if (string.IsNullOrEmpty(containerId))
                     {
                         _logger.LogWarning("Received message with missing or invalid ContainerId.");
+                        // Abandon the message to not remove it from the Service Bus
                         await _serviceBusReceiver.AbandonMessageAsync(receivedMessage);
+                        return;
                     }
+
+                    _logger.LogInformation($"Processing message for ContainerId: {containerId}");
+
+                    // Step 1: Update SQL (mark the container as paid)
+                    var result = await MarkAsPaidAndNotifyAsync(userId, containerId);
+                    if (!result)
+                    {
+                        _logger.LogWarning($"Failed to mark container {containerId} as paid.");
+                        // Abandon the message if processing failed
+                        await _serviceBusReceiver.AbandonMessageAsync(receivedMessage);
+                        return;
+                    }
+
+                    // Step 2: Update Cosmos DB (update the 'Holds' field)
+                    await UpdateContainerInCosmosDb(containerId);
+
+                    // After successful processing, complete the message to acknowledge and remove it from Service Bus
+                    await _serviceBusReceiver.CompleteMessageAsync(receivedMessage);
+                    _logger.LogInformation($"Message for ContainerId {containerId} processed and removed from Service Bus.");
                 }
-                catch (Exception ex)
+                else
                 {
-                    _logger.LogError($"Error processing Service Bus message: {ex.Message}");
-                    await _serviceBusReceiver.AbandonMessageAsync(receivedMessage);
+                    _logger.LogInformation("No messages received from Service Bus.");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                _logger.LogInformation("No messages received from Service Bus.");
+                _logger.LogError($"Error processing Service Bus message: {ex.Message}");
             }
         }
 
-        // Update the 'Holds' field in Cosmos DB
+        // Mark the container as paid and send a notification via Service Bus (already implemented earlier)
+        public async Task<bool> MarkAsPaidAndNotifyAsync(int userId, string containerId)
+        {
+            // Query the database to get the UserContainerData for the specified user and containerId
+            var userContainerData = await _dbContext.UserContainerData
+                .Where(x => x.UserId == Convert.ToString(userId) && x.ContainerId == containerId)
+                .FirstOrDefaultAsync(); // Fetch the first matching result (or null if not found)
+
+            // If no matching user container data is found, log a warning and return false
+            if (userContainerData == null)
+            {
+                _logger.LogWarning($"User with ID {userId} and Container ID {containerId} not found.");
+                return false;
+            }
+
+            // Mark the container as paid by setting the 'IsPaid' field to true
+            userContainerData.IsPaid = true;
+
+            // Save the changes to the database
+            await _dbContext.SaveChangesAsync();
+
+            // Prepare a message to send to the Service Bus (JSON format with the containerId)
+            var messageBody = new { ContainerId = containerId };
+            var message = new ServiceBusMessage(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(messageBody)))
+            {
+                ContentType = "application/json"
+            };
+
+            // Send the message to the Service Bus
+            await _serviceBusSender.SendMessageAsync(message);
+
+            // Log that the message was successfully sent
+            _logger.LogInformation($"Message sent to Service Bus for Container ID: {containerId}");
+
+            return true; // Return true indicating success
+        }
+
+
+        // Update the 'Holds' field in Cosmos DB (already implemented earlier)
         public async Task UpdateContainerInCosmosDb(string containerId)
         {
             try
             {
-                // Log containerId before querying to ensure it's valid
                 if (string.IsNullOrEmpty(containerId))
                 {
                     _logger.LogError("The containerId parameter is null or empty, which is invalid.");
@@ -110,14 +157,9 @@ namespace PaymentApi.Services
 
                 _logger.LogInformation($"Attempting to update container with ID: {containerId}");
 
-                // Build the query to search for the container by its ID (ensure partition key is correct)
                 var queryDefinition = new QueryDefinition("SELECT * FROM c WHERE c.ContainerId = @containerId")
                     .WithParameter("@containerId", containerId);
 
-                // Log the exact query being executed
-                _logger.LogInformation($"Executing query: SELECT * FROM c WHERE c.ContainerId = '{containerId}'");
-
-                // Execute the query (ensure the partition key is used)
                 var queryIterator = _cosmosContainer.GetItemQueryIterator<CosmosContainer>(
                     queryDefinition,
                     requestOptions: new QueryRequestOptions { PartitionKey = new PartitionKey(containerId) });
@@ -130,22 +172,13 @@ namespace PaymentApi.Services
                     return;
                 }
 
-                // Log the document retrieved (if any)
                 var cosmosItem = response.FirstOrDefault();
                 if (cosmosItem != null)
                 {
                     _logger.LogInformation($"Document retrieved with ID: {containerId}. Preparing to update.");
 
-                    // Log current 'Holds' value before updating
-                    _logger.LogInformation($"Current Holds value for Container ID: {containerId} is {cosmosItem.Holds}");
+                    cosmosItem.Holds = true;
 
-                    // Update the container's 'Holds' field
-                    cosmosItem.Holds = true; // Update to false, based on your previous request
-
-                    // Log the updated 'Holds' value
-                    _logger.LogInformation($"Updating container with ID: {containerId}, setting Holds to true.");
-
-                    // Replace the document with the updated data
                     await _cosmosContainer.UpsertItemAsync(cosmosItem, new PartitionKey(containerId));
 
                     _logger.LogInformation($"Container with ID: {containerId} successfully updated in Cosmos DB.");

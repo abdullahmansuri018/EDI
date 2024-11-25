@@ -34,4 +34,20 @@ export class PaymentService {
     // Call the API and handle errors
     return this.http.post(`${this.apiUrl}/mark-as-paid/${containerId}`, {}, { headers });
   }
+
+  // Method to call the 'process-service-bus-message' endpoint
+  processServiceBusMessage(): Observable<any> {
+    const token = this.getAuthToken();
+
+    // Check if the token exists, and if not, reject the request
+    if (!token) {
+      return throwError('Authentication token is missing');
+    }
+
+    // Set the token in the Authorization header
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    // Call the API and handle errors
+    return this.http.post(`${this.apiUrl}/process-service-bus-message`, {}, { headers });
+  }
 }
