@@ -52,8 +52,7 @@ namespace JsonDataApi.Services
             {
                 UserId = userId,
                 Email = email,
-                ContainerId = containerId,
-                IsPaid=isPaid
+                ContainerId = containerId
             };
 
             _dbContext.UserContainerData.Add(userContainerData);

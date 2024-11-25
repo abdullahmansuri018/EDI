@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { ContainerDataService } from '../../services/containerdata.service'; // Adjust the import path
+import { ContainerDataService } from '../../services/containerdata.service';
+import { PaymentService } from '../../services/payment.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { PaymentService } from '../../services/payment.service'; // Add the payment service
 
 @Component({
   selector: 'app-containerdata',
@@ -16,6 +16,7 @@ export class ContainerDataComponent {
   containerId: string = '';
   fetchedData: any[] = [];
   errorMessage: string = '';
+  successMessage: string = '';
 
   constructor(private containerDataService: ContainerDataService, private paymentService: PaymentService) {}
 
@@ -41,6 +42,7 @@ export class ContainerDataComponent {
       this.errorMessage = 'Container ID is required';
       return;
     }
+
     // Check if the containerId already exists in the fetched data
     const containerExists = this.fetchedData.some(container => container.containerId === this.containerId);
     if (containerExists) {
@@ -50,8 +52,10 @@ export class ContainerDataComponent {
 
     this.containerDataService.fetchContainerDataByContainerId(this.containerId).subscribe({
       next: (data) => {
-        this.fetchedData = data;  // Directly update the data
-        this.fetchDataByUserId();  // Fetch data by userId after this action
+        // Add the new data to the fetched list if it's not already present
+        this.fetchedData.push(data);  // Assuming the service returns one container object
+        this.successMessage = `Container ${this.containerId} fetched successfully.`;
+        this.errorMessage = '';  // Clear previous errors
       },
       error: (err) => {
         this.errorMessage = err.error?.message || 'Failed to fetch data';  // Handle error
@@ -64,7 +68,8 @@ export class ContainerDataComponent {
     this.containerDataService.removeContainer(containerId).subscribe({
       next: () => {
         this.fetchedData = this.fetchedData.filter(container => container.containerId !== containerId);  // Remove container locally
-        this.fetchDataByUserId();  // Fetch updated data after removal
+        this.successMessage = `Container ${containerId} removed successfully.`;
+        this.errorMessage = '';  // Clear previous errors
       },
       error: (err) => {
         this.errorMessage = err.error?.message || 'Failed to remove container';  // Handle error
@@ -75,10 +80,10 @@ export class ContainerDataComponent {
   // Mark container as paid and process service bus message
   markAsPaid(containerId: string) {
     this.errorMessage = ''; // Reset error message
+    this.successMessage = ''; // Reset success message
     
+    // Retrieve token from localStorage
     const token = localStorage.getItem('token');
-    console.log('Token retrieved:', token);  // Log the token to confirm it's being retrieved
-  
     if (!token) {
       console.error('Authentication token is missing');
       this.errorMessage = 'Authentication token is missing. Please log in again.';
@@ -89,22 +94,25 @@ export class ContainerDataComponent {
     this.paymentService.markAsPaid(containerId).subscribe({
       next: (response) => {
         console.log('Payment successful', response);
+    
         // Once payment is successful, process the service bus message
         this.paymentService.processServiceBusMessage().subscribe({
           next: (serviceBusResponse) => {
             console.log('Service bus message processed', serviceBusResponse);
-            alert('Payment processed successfully and service bus message processed!');
+            const message = serviceBusResponse?.message || 'Service bus message processed successfully.';
+            this.successMessage = `Payment processed successfully and ${message}`;
+            alert(this.successMessage);
           },
           error: (serviceBusError) => {
             console.error('Failed to process service bus message', serviceBusError);
-            this.errorMessage = serviceBusError.error?.message || 'Failed to process service bus message';
+            this.errorMessage = serviceBusError?.error?.message || 'Failed to process service bus message.';
           }
         });
       },
       error: (err) => {
         console.error('Payment failed', err);
-        this.errorMessage = err.error?.message || 'Failed to mark as paid';
+        this.errorMessage = err?.error?.message || 'Failed to mark as paid';
       }
     });
-  }
+  } 
 }

@@ -94,14 +94,14 @@ n9Segment.ReferenceIdentificationQualifier == "DWT" || n9Segment.ReferenceIdenti
                                 //decimal feeAmount = 0;
 
                                 // Attempt to parse the fee value from the segment
-                                //if (requiredjson.Fees > 0)
-                                //{
-                                //    requiredjson.Holds = true;
-                                //}
-                                //else
-                                //{ 
-                                //    requiredjson.Holds= false;
-                                //}
+                                if (requiredjson.Fees > 0)
+                                {
+                                   requiredjson.Holds = true;
+                                }
+                                else
+                                { 
+                                   requiredjson.Holds= false;
+                                }
                             }
                         }
                         break;

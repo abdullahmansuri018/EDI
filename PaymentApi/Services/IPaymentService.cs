@@ -1,8 +1,16 @@
+using System.Threading.Tasks;
+
 namespace PaymentApi.Services
 {
     public interface IPaymentService
     {
-        Task PushDataToServiceBusAsync(string containerId);  // Push data to Service Bus
-        Task ProcessMessageFromServiceBusAsync(int userId);  // Process message from Service Bus and update SQL & Cosmos DB
+        // Push data to Service Bus with containerId
+        Task PushDataToServiceBusAsync(string containerId);
+
+        // Process message from Service Bus, update SQL & Cosmos DB, and complete the message
+        Task ProcessMessageFromServiceBusAsync(int userId);
+
+        // Mark the container as paid, notify via Service Bus, and save the payment to the database
+        Task<bool> MarkAsPaidAndNotifyAsync(int userId, string containerId);
     }
 }

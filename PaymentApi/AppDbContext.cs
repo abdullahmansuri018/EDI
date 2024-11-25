@@ -13,6 +13,8 @@ namespace PaymentApi
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Payment> paymentData{get; set;}
+
     }
 
    

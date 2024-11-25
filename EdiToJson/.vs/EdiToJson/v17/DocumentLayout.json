@@ -184,7 +184,7 @@
               "RelativeDocumentMoniker": "Cosmos\\CosmosDbHelper.cs",
               "ToolTip": "D:\\EDI\\EdiToJson\\Cosmos\\CosmosDbHelper.cs",
               "RelativeToolTip": "Cosmos\\CosmosDbHelper.cs",
-              "ViewState": "AgIAADgAAAAAAAAAAAAkwD0AAAA1AAAAAAAAAA==",
+              "ViewState": "AgIAADAAAAAAAAAAAAAkwCwAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-21T06:35:27.1Z",
               "EditorCaption": ""
@@ -199,8 +199,7 @@
               "RelativeToolTip": "EdiSegment\\RequiredJson.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-21T06:05:59.018Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-21T06:05:59.018Z"
             },
             {
               "$type": "Document",
