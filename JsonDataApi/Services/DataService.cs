@@ -23,7 +23,7 @@ namespace JsonDataApi.Services
             _dbContext = dbContext;
         }
 
-        public async Task<List<CosmosContainer>> FetchDataByContainerId(string containerId, string userId, string email)
+        public async Task<CosmosContainer> FetchDataByContainerId(string containerId, string userId, string email)
         {
             // Check if there is already a record in UserContainerData for this userId and containerId
             var existingData = await _dbContext.UserContainerData.FirstOrDefaultAsync(uc =>  uc.ContainerId == containerId);
@@ -38,20 +38,22 @@ namespace JsonDataApi.Services
             var query = _container.GetItemQueryIterator<dynamic>(
                 $"SELECT * FROM c WHERE c.ContainerId = '{containerId}'");
 
-            var results = new List<CosmosContainer>();
+             CosmosContainer result = null;
+
 
             while (query.HasMoreResults)
             {
                 var response = await query.ReadNextAsync();
                 foreach (var item in response)
                 {
-                    var cosmosItem = JsonConvert.DeserializeObject<CosmosContainer>(item.ToString());
-                    results.Add(cosmosItem);
+                    result = JsonConvert.DeserializeObject<CosmosContainer>(item.ToString());
+                    break; // Only return the first result
                 }
             }
 
+
             // If no data found in Cosmos DB, return null
-            if (results.Count == 0)
+            if (result == null)
             {
                 return null;
             }
@@ -67,7 +69,7 @@ namespace JsonDataApi.Services
             _dbContext.UserContainerData.Add(userContainerData);
             await _dbContext.SaveChangesAsync();
 
-            return results;
+            return result;
         }
 
         public async Task<List<CosmosContainer>> FetchDataByUserId(string userId)
