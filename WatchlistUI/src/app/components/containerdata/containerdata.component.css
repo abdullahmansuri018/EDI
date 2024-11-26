@@ -1,0 +1,122 @@
+/* Basic layout and spacing */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f9f9f9; /* Light background for the page */
+  position: relative; /* Required for absolute positioning of logout button */
+}
+
+/* Heading styling */
+h2, h3 {
+  color: #333;
+  text-align: center;
+  font-weight: 600; /* Slightly bold headings */
+}
+
+/* General container styles */
+div {
+  margin: 20px;
+  padding: 20px;
+  background-color: rgb(248, 248, 247); /* White background for div */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+/* Input field styling */
+input {
+  padding: 10px;
+  margin-right: 10px;
+  width: 220px; /* A little wider input */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease-in-out; /* Smooth transition for border focus */
+}
+
+/* Focus state for inputs */
+input:focus {
+  border-color: #4CAF50; /* Green border on focus */
+  outline: none; /* Remove outline */
+}
+
+/* Button styling */
+button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 16px;
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+/* Hover state for buttons */
+button:hover {
+  background-color: #45a049; /* Slightly darker green on hover */
+}
+
+/* Disabled button styling */
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Error and success messages */
+.error-message {
+  color: #e74c3c; /* Red color for errors */
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.success-message {
+  color: #2ecc71; /* Green color for success */
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+td {
+  background-color: #fafafa;
+}
+
+tr:hover td {
+  background-color: #f1f1f1; /* Highlight row on hover */
+}
+
+/* Logout button */
+button.logout {
+  background-color: #f44336;  /* Red color */
+  position: absolute; /* Fixed positioning */
+  top: 20px; /* Top offset */
+  right: 4%;
+  padding: 8px 15px;
+}
+
+button.logout:hover {
+  background-color: #e53935; /* Darker red on hover */
+}

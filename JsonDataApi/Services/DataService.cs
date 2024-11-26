@@ -23,8 +23,17 @@ namespace JsonDataApi.Services
             _dbContext = dbContext;
         }
 
-        public async Task<List<CosmosContainer>> FetchDataByContainerId(string containerId, string userId, string email,bool isPaid)
+        public async Task<List<CosmosContainer>> FetchDataByContainerId(string containerId, string userId, string email)
         {
+            // Check if there is already a record in UserContainerData for this userId and containerId
+            var existingData = await _dbContext.UserContainerData.FirstOrDefaultAsync(uc =>  uc.ContainerId == containerId);
+
+            if (existingData != null)
+            {
+                // If the record exists, return null or throw an error as you prefer
+                throw new InvalidOperationException("Container is not available to add");
+            }
+
             // Query Cosmos DB to check if there is any data for the given ContainerId
             var query = _container.GetItemQueryIterator<dynamic>(
                 $"SELECT * FROM c WHERE c.ContainerId = '{containerId}'");
@@ -41,7 +50,7 @@ namespace JsonDataApi.Services
                 }
             }
 
-            // If no data found in Cosmos DB, return empty list
+            // If no data found in Cosmos DB, return null
             if (results.Count == 0)
             {
                 return null;

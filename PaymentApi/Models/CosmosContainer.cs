@@ -14,12 +14,12 @@ namespace PaymentApi.Models
         public bool Holds { get; set; }
         public string Origin { get; set; }
         public string Destination { get; set; }
-        public string line { get; set; }  // Use 'line' (lowercase) to match Cosmos DB document
+        public string Line { get; set; }  // Use 'line' (lowercase) to match Cosmos DB document
         public string VesselName { get; set; }
         public string VesselCode { get; set; }
         public string Voyage { get; set; }
         public string SizeType { get; set; }
         public int Fees { get; set; }
-        public DateTime Date { get; set; }  // Ensure the format matches or convert accordingly
+        public DateTime Date { get; set; } // Ensure the format matches or convert accordingly
     }
 }

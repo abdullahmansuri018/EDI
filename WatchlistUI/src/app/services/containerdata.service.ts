@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { throwError } from 'rxjs';  // Import throwError for proper error handling
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class ContainerDataService {
   fetchContainerDataByContainerId(containerId: string): Observable<any> {
     const token = localStorage.getItem('token');  // Get the JWT token from localStorage
     if (!token) {
-      throw new Error('User is not authenticated');
+      return throwError('User is not authenticated');
     }
 
     const headers = new HttpHeaders({
@@ -26,9 +27,9 @@ export class ContainerDataService {
 
   // Method to fetch data by userId
   fetchContainerDataByUserId(): Observable<any> {
-    const token = localStorage.getItem('token');  // Get the JWT token from localStorage
+    const token = localStorage.getItem('token');
     if (!token) {
-      throw new Error('User is not authenticated');
+      return throwError('User is not authenticated');
     }
 
     const headers = new HttpHeaders({
@@ -39,9 +40,9 @@ export class ContainerDataService {
   }
 
   removeContainer(containerId: string): Observable<any> {
-    const token = localStorage.getItem('token');  // Get the JWT token from localStorage
+    const token = localStorage.getItem('token');
     if (!token) {
-      throw new Error('User is not authenticated');
+      return throwError('User is not authenticated');
     }
 
     const headers = new HttpHeaders({

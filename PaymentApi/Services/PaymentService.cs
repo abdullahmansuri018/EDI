@@ -77,7 +77,7 @@ namespace PaymentApi.Services
                 _logger.LogInformation($"Processing message for ContainerId: {containerId}");
 
                 // Process payment and notify
-                await MarkAsPaidAndNotifyAsync(userId, containerId);
+                await CreatePaymentTableSql(userId, containerId);
                 await UpdateContainerInCosmosDb(containerId);
                 await _serviceBusReceiver.CompleteMessageAsync(receivedMessage);
                 System.Console.WriteLine(receivedMessage);
@@ -89,7 +89,7 @@ namespace PaymentApi.Services
         }
 
         // Mark container as paid and send a notification to Service Bus
-        public async Task<bool> MarkAsPaidAndNotifyAsync(int userId, string containerId)
+        public async Task<bool> CreatePaymentTableSql(int userId, string containerId)
         {
             var userContainerData = _dbContext.UserContainerData
                 .FirstOrDefault(x => x.UserId == userId.ToString() && x.ContainerId == containerId);

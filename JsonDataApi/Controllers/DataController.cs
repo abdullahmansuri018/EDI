@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System;
 
 namespace JsonDataApi.Controllers
 {
@@ -22,60 +23,83 @@ namespace JsonDataApi.Controllers
         [HttpGet("fetch-by-containerId/{containerId}")]
         public async Task<IActionResult> FetchDataByContainerId(string containerId)
         {
-            // Extract userId and email from JWT Claims
-            var userId = User.Claims.FirstOrDefault(c => c.Type == "Id")?.Value;
-            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            bool isPaid=false;
-
-            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(email))
+            try
             {
-                return Unauthorized("User information is missing from the claims.");
+                var userId = User.Claims.FirstOrDefault(c => c.Type == "Id")?.Value;
+                var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+                if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(email))
+                {
+                    return Unauthorized(new { message = "User information is missing from the claims." });
+                }
+
+                var data = await _dataService.FetchDataByContainerId(containerId, userId, email);
+
+                if (data == null)
+                {
+                    return NotFound(new { message = $"No data found for ContainerId: {containerId}" });
+                }
+
+                return Ok(data);
             }
-
-            var data = await _dataService.FetchDataByContainerId(containerId, userId, email,isPaid);
-
-            if (data == null)
+            catch (InvalidOperationException ex)
             {
-                return NotFound($"No data found for ContainerId: {containerId}");
+                return Conflict(new { message = ex.Message });
             }
-
-            return Ok(data);
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Internal server error: {ex.Message}" });
+            }
         }
 
         [Authorize]
         [HttpGet("fetch-by-userId")]
         public async Task<IActionResult> FetchDataByUserId()
         {
-            var userId = User.Claims.FirstOrDefault(c => c.Type == "Id")?.Value;
-
-            if (string.IsNullOrEmpty(userId))
+            try
             {
-                return Unauthorized("User information is missing from the claims.");
-            }
+                var userId = User.Claims.FirstOrDefault(c => c.Type == "Id")?.Value;
 
-            var data = await _dataService.FetchDataByUserId(userId);
-            return Ok(data);
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return Unauthorized(new { message = "User information is missing from the claims." });
+                }
+
+                var data = await _dataService.FetchDataByUserId(userId);
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Internal server error: {ex.Message}" });
+            }
         }
 
         [Authorize]
         [HttpDelete("remove-container/{containerId}")]
         public async Task<IActionResult> RemoveContainer(string containerId)
         {
-            var userId = User.Claims.FirstOrDefault(c => c.Type == "Id")?.Value;
-
-            if (string.IsNullOrEmpty(userId))
+            try
             {
-                return Unauthorized("User information is missing from the claims.");
+                var userId = User.Claims.FirstOrDefault(c => c.Type == "Id")?.Value;
+
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return Unauthorized(new { message = "User information is missing from the claims." });
+                }
+
+                var success = await _dataService.RemoveContainer(containerId, userId);
+
+                if (!success)
+                {
+                    return NotFound(new { message = $"Container with ID {containerId} not found or you do not have permission to delete it." });
+                }
+
+                return NoContent();
             }
-
-            var success = await _dataService.RemoveContainer(containerId, userId);
-
-            if (!success)
+            catch (Exception ex)
             {
-                return NotFound($"Container with ID {containerId} not found or you do not have permission to delete it.");
+                return StatusCode(500, new { message = $"Internal server error: {ex.Message}" });
             }
-
-            return NoContent();  // Return 204 No Content on successful deletion
         }
     }
 }

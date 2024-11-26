@@ -3,6 +3,8 @@ using PaymentApi.Services;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace PaymentApi.Controllers
 {
@@ -21,49 +23,49 @@ namespace PaymentApi.Controllers
             _logger = logger;
         }
 
-        // API to mark as paid, and push data to Azure Service Bus
+        [Authorize]
         [HttpPost("mark-as-paid/{containerId}")]
         public async Task<IActionResult> MarkAsPaid(string containerId)
         {
-            var userIdString = User.Claims.FirstOrDefault(c => c.Type == "Id")?.Value;
-            if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out var userId))
-            {
-                _logger.LogWarning("Invalid or missing user information.");
-                return Unauthorized(new { message = "Invalid user information." });
-            }
-
-            var user = await _dbContext.Users.FindAsync(userId);
-            if (user == null)
-            {
-                _logger.LogWarning("User not found.");
-                return Unauthorized(new { message = "User not found." });
-            }
-
             try
             {
+                var userIdString = User.Claims.FirstOrDefault(c => c.Type == "Id")?.Value;
+                if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out var userId))
+                {
+                    _logger.LogWarning("Invalid or missing user information.");
+                    return Unauthorized(new { message = "Invalid user information." });
+                }
+
+                var user = await _dbContext.Users.FindAsync(userId);
+                if (user == null)
+                {
+                    _logger.LogWarning("User not found.");
+                    return Unauthorized(new { message = "User not found." });
+                }
+
                 await _paymentService.PushDataToServiceBusAsync(containerId);
                 return Ok(new { message = "Container marked as paid, notification sent to Service Bus." });
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error while marking container {containerId} as paid: {ex.Message}");
-                return StatusCode(500, new { message = "An error occurred." });
+                return StatusCode(500, new { message = "An error occurred while processing your request." });
             }
         }
 
-        // API to process Service Bus messages, update SQL and Cosmos DB
+        [Authorize]
         [HttpPost("process-service-bus-message")]
         public async Task<IActionResult> ProcessServiceBusMessage()
         {
-            var userIdString = User.Claims.FirstOrDefault(c => c.Type == "Id")?.Value;
-            if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out var userId))
-            {
-                _logger.LogWarning("Invalid or missing user information.");
-                return Unauthorized(new { message = "Invalid user information." });
-            }
-
             try
             {
+                var userIdString = User.Claims.FirstOrDefault(c => c.Type == "Id")?.Value;
+                if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out var userId))
+                {
+                    _logger.LogWarning("Invalid or missing user information.");
+                    return Unauthorized(new { message = "Invalid user information." });
+                }
+
                 await _paymentService.ProcessMessageFromServiceBusAsync(userId);
                 return Ok(new { message = "Service bus message processed." });
             }

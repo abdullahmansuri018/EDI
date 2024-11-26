@@ -1,15 +1,18 @@
 <div>
   <h2>Fetch Container Data by Container ID</h2>
-  
+
   <!-- Input for Container ID -->
   <input [(ngModel)]="containerId" placeholder="Enter Container ID" />
   <button (click)="onFetchData()">Fetch Data</button>
-  
+
+  <!-- Logout Button -->
+  <button class="logout" (click)="logout()">Logout</button>
+
   <!-- Error Message -->
   <div *ngIf="errorMessage" class="error-message">
     <p>{{ errorMessage }}</p>
   </div>
-  
+
   <!-- Displaying Fetched Data in a Table -->
   <div *ngIf="fetchedData && fetchedData.length > 0">
     <h3>Fetched Data</h3>
@@ -29,6 +32,7 @@
           <th>Size Type</th>
           <th>Fees</th>
           <th>Date</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -47,7 +51,7 @@
           <td>{{ item.fees }}</td>
           <td>{{ item.date | date: 'yyyy-MM-dd' }}</td>  <!-- Formatting the date -->
           <td>
-            <button (click)="markAsPaid(item.containerId)">Pay</button>
+            <button *ngIf="item.fees !== 0" (click)="markAsPaid(item.containerId)">Pay</button>
             <button (click)="removeContainer(item.containerId)">Remove</button>
           </td>
         </tr>

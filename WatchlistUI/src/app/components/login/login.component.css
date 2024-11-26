@@ -1,0 +1,93 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Full viewport height */
+  }
+  
+  /* Card container for the login form */
+  .login-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Card width */
+    text-align: center;
+  
+    /* Centering the form on the screen */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Moves the form back by 50% of its own width and height */
+  }
+  
+  /* Title for the form */
+  .login-form h2 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Form group for each input field */
+  .form-group {
+    margin-bottom: 15px;
+    text-align: left; /* Align labels to the left */
+  }
+  
+  label {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  input:focus {
+    border-color: #4CAF50; /* Green border when focused */
+    outline: none;
+  }
+  
+  /* Error message styling */
+  .error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
+  /* Submit button styling */
+  button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50; /* Green color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  button:hover {
+    background-color: #45a049; /* Darker green when hovered */
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 600px) {
+    .login-form {
+      width: 90%; /* Make the card take up more space on small screens */
+    }
+  }
+  

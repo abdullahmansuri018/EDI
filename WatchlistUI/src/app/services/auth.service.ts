@@ -18,7 +18,9 @@ export class AuthService {
 
   // Register function
   register(user: User): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/register`, user);
+    return this.http.post<any>(`${this.apiUrl}/register`, user, {
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 
   // Check if user is logged in by verifying token presence in localStorage
