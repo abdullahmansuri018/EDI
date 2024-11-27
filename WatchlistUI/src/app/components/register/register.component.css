@@ -1,93 +1,157 @@
-/* General body styling */
+/* General Body Styling */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    height: 100vh; /* Full viewport height */
-  }
-  
-  /* Card container for the login form */
+  font-family: Arial, sans-serif;
+  background-color: #f4f7fc;
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* Ensure body takes full viewport height */
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* Required for absolute positioning of the form */
+}
+
+/* Styling the Register Form Container */
+.register-form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+  position: absolute; /* Positioning the form absolutely */
+  top: 50%; /* Move the form to the center vertically */
+  left: 50%; /* Move the form to the center horizontally */
+  transform: translate(-50%, -50%); /* Adjust the form position by 50% of its own height and width */
+}
+
+/* Form Heading */
+.register-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+/* Form Group Styling */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-size: 14px;
+  color: #555;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #4e73df;
+  outline: none;
+}
+
+/* Error Message Styling */
+.error {
+  color: #f44336;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Button Styling */
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  color: white;
+  background-color: #4e73df;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #2e59d9;
+}
+
+/* Media Queries for Responsive Design */
+
+/* Small Devices (Phones in Portrait Mode, less than 600px) */
+@media (max-width: 599px) {
   .register-form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px; /* Card width */
-    text-align: center;
-  
-    /* Centering the form on the screen */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Moves the form back by 50% of its own width and height */
+    padding: 15px;
+    max-width: 100%;
+    margin: 0 10px; /* Smaller margin for mobile */
   }
-  
-  /* Title for the form */
+
   .register-form h2 {
-    color: #333;
-    margin-bottom: 20px;
+    font-size: 20px;
   }
-  
-  /* Form group for each input field */
-  .form-group {
-    margin-bottom: 15px;
-    text-align: left; /* Align labels to the left */
-  }
-  
-  label {
-    font-weight: bold;
-    color: #555;
-  }
-  
-  input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  input:focus {
-    border-color: #4CAF50; /* Green border when focused */
-    outline: none;
-  }
-  
-  /* Error message styling */
-  .error {
-    color: red;
-    font-size: 14px;
-    margin-top: 10px;
-  }
-  
-  /* Submit button styling */
-  button {
-    width: 100%;
-    padding: 12px;
-    background-color: #4CAF50; /* Green color */
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+
+  .form-group input {
     font-size: 16px;
-    margin-top: 10px;
+    padding: 14px;
   }
-  
-  button:hover {
-    background-color: #45a049; /* Darker green when hovered */
+
+  button {
+    font-size: 18px;
+    padding: 14px;
   }
-  
-  button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+}
+
+/* Medium Devices (Tablets, 600px to 1024px) */
+@media (min-width: 600px) and (max-width: 1024px) {
+  .register-form {
+    padding: 20px;
+    max-width: 400px;
   }
-  
-  /* Responsive design for smaller screens */
-  @media (max-width: 600px) {
-    .login-form {
-      width: 90%; /* Make the card take up more space on small screens */
-    }
+
+  .register-form h2 {
+    font-size: 22px;
   }
-  
+
+  .form-group input {
+    font-size: 16px;
+    padding: 14px;
+  }
+
+  button {
+    font-size: 18px;
+    padding: 16px;
+  }
+}
+
+/* Large Devices (Desktops, 1024px and above) */
+@media (min-width: 1024px) {
+  .register-form {
+    padding: 25px;
+    max-width: 500px;
+  }
+
+  .register-form h2 {
+    font-size: 24px;
+  }
+
+  .form-group input {
+    font-size: 18px;
+    padding: 16px;
+  }
+
+  button {
+    font-size: 18px;
+    padding: 18px;
+    
+  }
+}

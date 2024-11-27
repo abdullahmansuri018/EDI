@@ -8,10 +8,6 @@
   <!-- Logout Button -->
   <button class="logout" (click)="logout()">Logout</button>
 
-  <!-- Error Message -->
-  <div *ngIf="errorMessage" class="error-message">
-    <p>{{ errorMessage }}</p>
-  </div>
 
   <!-- Displaying Fetched Data in a Table -->
   <div *ngIf="fetchedData && fetchedData.length > 0">

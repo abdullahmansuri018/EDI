@@ -18,6 +18,12 @@ export class AuthService {
 
   // Register function
   register(user: User): Observable<any> {
+    if (!user.email || !user.password) {
+      return new Observable(observer => {
+        observer.error({ status: 400, error: { message: 'Email and Password are required.' } });
+      });
+    }
+   
     return this.http.post<any>(`${this.apiUrl}/register`, user, {
       headers: { 'Content-Type': 'application/json' }
     });

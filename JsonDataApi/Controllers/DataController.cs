@@ -42,11 +42,15 @@ namespace JsonDataApi.Controllers
 
                 return Ok(data);
             }
-            catch (InvalidOperationException ex)
+            catch (ArgumentException ex)  // Handling specific invalid argument exception
             {
-                return Conflict(new { message = ex.Message });
+                return BadRequest(new { message = ex.Message });  // Return 400 for bad request
             }
-            catch (Exception ex)
+            catch (InvalidOperationException ex)  // Handling cases for invalid operations
+            {
+                return Conflict(new { message = ex.Message });  // Return 409 if the operation is conflicting
+            }
+            catch (Exception ex)  // General exception handler for unexpected errors
             {
                 return StatusCode(500, new { message = $"Internal server error: {ex.Message}" });
             }
@@ -66,6 +70,10 @@ namespace JsonDataApi.Controllers
                 }
 
                 var data = await _dataService.FetchDataByUserId(userId);
+                if (data == null)
+                {
+                    return NotFound(new { message = $"No data found" });
+                }
                 return Ok(data);
             }
             catch (Exception ex)
@@ -94,7 +102,7 @@ namespace JsonDataApi.Controllers
                     return NotFound(new { message = $"Container with ID {containerId} not found or you do not have permission to delete it." });
                 }
 
-                return NoContent();
+                return NoContent();  // HTTP 204 for successful deletion
             }
             catch (Exception ex)
             {

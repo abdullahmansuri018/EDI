@@ -32,7 +32,7 @@ export class PaymentService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     // Call the API and handle errors
-    return this.http.post(`${this.apiUrl}/mark-as-paid/${containerId}`, {}, { headers });
+    return this.http.post(`${this.apiUrl}/service-bus-message-send/${containerId}`, {}, { headers });
   }
 
   // Method to call the 'process-service-bus-message' endpoint

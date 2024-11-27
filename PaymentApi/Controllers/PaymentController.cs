@@ -24,8 +24,8 @@ namespace PaymentApi.Controllers
         }
 
         [Authorize]
-        [HttpPost("mark-as-paid/{containerId}")]
-        public async Task<IActionResult> MarkAsPaid(string containerId)
+        [HttpPost("service-bus-message-send/{containerId}")]
+        public async Task<IActionResult> ServiceBusMessageSender(string containerId)
         {
             try
             {

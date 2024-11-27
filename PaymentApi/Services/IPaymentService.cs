@@ -11,6 +11,6 @@ namespace PaymentApi.Services
         Task ProcessMessageFromServiceBusAsync(int userId);
 
         // Mark the container as paid, notify via Service Bus, and save the payment to the database
-        Task<bool> CreatePaymentTableSql(int userId, string containerId);
+        //Task<bool> CreatePaymentTableSql(int userId, string containerId);
     }
 }

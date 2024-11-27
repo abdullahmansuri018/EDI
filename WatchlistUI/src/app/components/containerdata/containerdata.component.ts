@@ -47,7 +47,7 @@ export class ContainerDataComponent implements OnInit {
     }
     if (this.fetchedData.some(container => container.containerId === this.containerId)) {
       this.errorMessage = 'This container ID has already been entered';
-      return;
+      alert(this.errorMessage);
     }
 
     this.containerDataService.fetchContainerDataByContainerId(this.containerId).subscribe({
@@ -59,7 +59,10 @@ export class ContainerDataComponent implements OnInit {
           this.errorMessage = 'No data returned for this container ID';
         }
       },
-      error: (err) => this.errorMessage = err.error?.message || 'Failed to fetch data'
+      error: (err) => {this.errorMessage = err.error?.message || 'Failed to fetch data';
+        alert(this.errorMessage);
+      }
+      
     });
   }
 
@@ -70,7 +73,7 @@ export class ContainerDataComponent implements OnInit {
         this.fetchedData = this.fetchedData.filter(container => container.containerId !== containerId);
         this.successMessage = `Container ${containerId} removed successfully.`;
       },
-      error: (err) => this.errorMessage = err.error?.message || 'Failed to remove container'
+      error: (err) => this.errorMessage = err.error?.message || 'Failed to remove container' 
     });
   }
 
@@ -79,7 +82,7 @@ export class ContainerDataComponent implements OnInit {
     const token = localStorage.getItem('token');
     if (!token) {
       this.errorMessage = 'Authentication token is missing. Please log in again.';
-      return;
+      alert(this.errorMessage);
     }
 
     this.paymentService.markAsPaid(containerId).subscribe({
@@ -88,6 +91,7 @@ export class ContainerDataComponent implements OnInit {
           next: (response) => {
             this.successMessage = `Payment processed successfully and ${response?.message || 'Service bus message processed.'}`;
             alert(this.successMessage);
+            this.fetchDataByUserId();
           },
           error: (err) => this.errorMessage = err.error?.message || 'Failed to process service bus message'
         });
@@ -98,7 +102,7 @@ export class ContainerDataComponent implements OnInit {
 
   // Logout method
   logout() {
-    localStorage.removeItem('token');
+    localStorage.clear();
     this.router.navigate(['/login']);
   }
 }
