@@ -6,14 +6,9 @@ using System.Threading.Tasks;
 
 namespace EdiToJson.EdiSegment
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class B4
     {
-        /// <summary>
-        /// 
-        /// </summary>
+        
         public string SpecialHandlingCode { get; set; }
         public string InquiryRequestCode { get; set; }
         public string ShipmentStatusCode { get; set; }
@@ -26,7 +21,6 @@ namespace EdiToJson.EdiSegment
         public string EquipmentType { get; set; }
         public string LocationIdentifier { get; set; }
         public string LocationQualifier { get; set; }
-        //
         public string EquipmentNoCheckDigit { get; set; }
     }
 }

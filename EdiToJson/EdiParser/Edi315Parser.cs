@@ -26,16 +26,7 @@ namespace EdiToJson.EdiParser
             List<RequiredJson> requiredJsonList = new List<RequiredJson>();
             RequiredJson requiredjson = null;
 
-
-
-          //  Edi315 edi315 = null;
-           // ISA isa = null;
-            //GS gs = null;
-          //  SegmentBlock currentBlock = null;  // Current block between ST and SE
-
             var lines = ediData.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-
-           // bool isParsingST = false;  // Flag to track whether we're parsing between ST and SE segments
 
             foreach (var line in lines)
             {
@@ -43,33 +34,25 @@ namespace EdiToJson.EdiParser
 
                 switch (segments[0])
                 {
-                    //case "ISA":
-                    //    isa = new ISA();
-                    //    isa = isaParser.ParseISA(segments);  // Parse ISA only once
-                    //    break;
-                    //case "GS":
-                    //    gs = new GS();
-                    //    gs = gsParser.ParseGS(segments);  // Parse GS only once
-                    //    break;
+                    case "ISA":
+                         var isaSegment = isaParser.ParseISA(segments);  
+                        break;
+                    case "GS":
+                       var  gsSegment = gsParser.ParseGS(segments); 
+                        break;
                     case "ST":
                         requiredjson = new RequiredJson();
-                        //currentBlock = new SegmentBlock();
-                        var stSegment = stParser.ParseST(segments); // Parse ST
-                       // isParsingST = true;
+                        var stSegment = stParser.ParseST(segments); 
                         break;
                     case "B4":
-                        
-                            var b4Segment = b4Parser.ParseB4(segments);  // Parse and get B4 segment
-                            //currentBlock.B4s.Add(b4Segment);  // Parse and add B4 segment
+                            var b4Segment = b4Parser.ParseB4(segments);  
                             requiredjson.ContainerId = $"{b4Segment.EquipmentIntial}{b4Segment.EquipmentNumber}";
                             requiredjson.TradeType = b4Segment.SpecialHandlingCode;
                             requiredjson.Status = b4Segment.ShipmentStatusCode;
                             requiredjson.SizeType = b4Segment.EquipmentType;
-                           // requiredjson.Date = b4Segment.ReleaseDate;
                         break;
                     case "N9":
                             var n9Segment = n9Parser.ParseN9(segments);
-                            //currentBlock.N9s.Add(n9Segment);  // Parse and add N9 segment
                             if (n9Segment.ReferenceIdentificationQualifier == "SCA")
                             {
                                 requiredjson.line = n9Segment.ReferenceIdentification;
@@ -84,9 +67,6 @@ namespace EdiToJson.EdiParser
                             if (validQualifiers.Contains(n9Segment.ReferenceIdentificationQualifier))
                             {
                                 requiredjson.Fees+=Convert.ToInt32(n9Segment.ReferenceIdentification);
-                                //decimal feeAmount = 0;
-
-                                // Attempt to parse the fee value from the segment
                                 if (requiredjson.Fees > 0)
                                 {
                                    requiredjson.Holds = true;
@@ -101,13 +81,11 @@ namespace EdiToJson.EdiParser
                     case "SG":
                        
                             var sgSegment = sgParser.ParseSG(segments);
-                           // currentBlock.SGs.Add(sgSegment);  // Parse and add SG segment
                    
                         break;
                     case "Q2":
                       
                             var q2Segment = q2Parser.ParseQ2(segments);
-                            //currentBlock.Q2 = q2Segment;  // Parse and add Q2 segment
                             requiredjson.VesselName = q2Segment.VesselName;
                             requiredjson.VesselCode = q2Segment.VesselCode;
                             requiredjson.Voyage = q2Segment.FlightNumber;
@@ -116,7 +94,6 @@ namespace EdiToJson.EdiParser
                     case "R4":
                        
                             var r4Segment = r4Parser.ParseR4(segments);
-                            //currentBlock.R4s.Add(r4Segment);  // Parse and add R4 segment
                             if (r4Segment.PortFunctionCode == "L")
                             {
                                 requiredjson.Origin = r4Segment.PortName;
@@ -129,16 +106,19 @@ namespace EdiToJson.EdiParser
                         
                         break;
                     case "SE":
-                        
-                           // edi315 = new Edi315();
                             var seSegment = seParser.ParseSE(segments);
-                         //   currentBlock.SE = seSegment;  // Parse SE and close the block
                             requiredJsonList.Add(requiredjson);
-
-                           // currentBlock = null;
-                            //edi315 = null;
                             requiredjson = null;
                         
+                        break;
+                    case "GE":
+                            var geSegment = geParser.ParseGE(segments);
+                           
+                        
+                        break;
+                    case "IEA":
+                        
+                            var ieaSegment = ieaParser.ParseIEA(segments);                           
                         break;
                     default:
                         Console.WriteLine($"Unknown segment: {segments[0]}");
@@ -146,7 +126,7 @@ namespace EdiToJson.EdiParser
                 }
             }
 
-            return requiredJsonList;  // Return the list of required JSON objects
+            return requiredJsonList; 
         }
 
     }
@@ -156,20 +136,7 @@ namespace EdiToJson.EdiParser
 
 
 
-                    //case "GE":
-                    //    if (!geParsed)
-                    //    {
-                    //        edi315.GE = geParser.ParseGE(segments);  // Parse GE only once
-                    //        geParsed = true;
-                    //    }
-                    //    break;
-                    //case "IEA":
-                    //    if (!ieaParsed)
-                    //    {
-                    //        edi315.IEA = ieaParser.ParseIEA(segments);  // Parse IEA only once
-                    //        ieaParsed = true;
-                    //    }
-                    //    break;
+                    //
                     //default:
                     //    Console.WriteLine($"Unknown segment: {segments[0]}");
                     //    break;

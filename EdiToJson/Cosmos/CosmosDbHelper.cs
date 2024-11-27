@@ -31,7 +31,7 @@ public static class CosmosDbHelper
             var containerProperties = new ContainerProperties
             {
                 Id = containerId,
-                PartitionKeyPath = "/ContainerId"  // Using 'ContainerId' as partition key
+                PartitionKeyPath = "/ContainerId"  
             };
 
             container = database.CreateContainerIfNotExistsAsync(containerProperties).Result;
@@ -44,17 +44,15 @@ public static class CosmosDbHelper
         }
     }
 
-    // Upload data to Cosmos DB with the dynamic PartitionKey based on the ContainerId
     public static async Task UploadToCosmosDb(RequiredJson jsonOutput, string containerId)
     {
         try
         {
             
-            // Create an anonymous object to hold the data with the 'id' field and dynamic PartitionKey based on the ContainerId
             var containerItem = new
             {
                 id = Guid.NewGuid().ToString(),
-                ContainerId = containerId, // Directly include the ContainerId
+                ContainerId = containerId,
                 TradeType = jsonOutput.TradeType,
                 Status = jsonOutput.Status,
                 Holds = jsonOutput.Holds,
@@ -68,9 +66,7 @@ public static class CosmosDbHelper
                 Fees = jsonOutput.Fees
             };
             Console.WriteLine($"Uploading item with id: {containerItem.id} and partition key: {containerItem.ContainerId}");
-            // Upload the item to Cosmos DB using the generated 'id' and 'ContainerId' as partition key
             await container.CreateItemAsync(containerItem, new PartitionKey(containerId));
-            //Console.WriteLine($"Uploaded data to Cosmos DB with partition key (ContainerId): {containerId} and id: {uniqueId}.");
         }
         catch (CosmosException cosmosEx)
         {
