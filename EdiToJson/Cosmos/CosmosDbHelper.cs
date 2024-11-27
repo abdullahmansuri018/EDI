@@ -65,8 +65,7 @@ public static class CosmosDbHelper
                 VesselCode = jsonOutput.VesselCode,
                 Voyage = jsonOutput.Voyage,
                 SizeType = jsonOutput.SizeType,
-                Fees = jsonOutput.Fees,
-                Date = jsonOutput.Date// The data you're uploading
+                Fees = jsonOutput.Fees
             };
             Console.WriteLine($"Uploading item with id: {containerItem.id} and partition key: {containerItem.ContainerId}");
             // Upload the item to Cosmos DB using the generated 'id' and 'ContainerId' as partition key

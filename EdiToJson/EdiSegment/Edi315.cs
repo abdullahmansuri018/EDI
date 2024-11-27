@@ -10,13 +10,14 @@ namespace EdiToJson.EdiSegment
     {
         public ISA ISA { get; set; }
         public GS GS { get; set; }
-        public SegmentBlock SegmentBlocks { get; set; }
+        public ST ST { get; set; }
+        public B4 B4 { get; set; } 
+        public N9 N9 { get; set; }
+        public Q2 Q2 { get; set; }
+        public SG SG { get; set; }
+        public R4 R4 { get; set; }
+        public SE SE { get; set; }
         public GE GE { get; set; }
         public IEA IEA { get; set; }
-
-        //public Edi315()
-        //{
-        //    SegmentBlocks = new List<SegmentBlock>();
-        //}
     }
 }

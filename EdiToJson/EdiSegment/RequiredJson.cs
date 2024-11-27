@@ -20,7 +20,5 @@ namespace EdiToJson.EdiSegment
         public string Voyage { get; set; }
         public string SizeType { get; set; }
         public int Fees { get; set; }
-
-        public DateOnly Date { get; set; }
     }
 }

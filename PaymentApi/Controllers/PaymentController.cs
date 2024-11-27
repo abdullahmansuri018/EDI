@@ -30,6 +30,7 @@ namespace PaymentApi.Controllers
             try
             {
                 var userIdString = User.Claims.FirstOrDefault(c => c.Type == "Id")?.Value;
+
                 if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out var userId))
                 {
                     _logger.LogWarning("Invalid or missing user information.");

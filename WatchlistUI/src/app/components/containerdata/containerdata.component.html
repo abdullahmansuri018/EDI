@@ -31,7 +31,6 @@
           <th>Voyage</th>
           <th>Size Type</th>
           <th>Fees</th>
-          <th>Date</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -49,7 +48,6 @@
           <td>{{ item.voyage }}</td>
           <td>{{ item.sizeType }}</td>
           <td>{{ item.fees }}</td>
-          <td>{{ item.date | date: 'yyyy-MM-dd' }}</td>  <!-- Formatting the date -->
           <td>
             <button *ngIf="item.fees !== 0" (click)="markAsPaid(item.containerId)">Pay</button>
             <button (click)="removeContainer(item.containerId)">Remove</button>
